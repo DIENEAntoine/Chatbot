@@ -26,8 +26,8 @@ const ChatBot = () => {
             setMessages(prevMessages => [...prevMessages, { id: Date.now(), text: botMessage, sender: 'bot' }]);
         })
         .catch(error => console.error('There was an error!', error));
-        setMessages([...messages, newMessage]);
-        setMessage('');
+        // setMessages([...messages, newMessage]);
+        // setMessage('');
     };    
 
     return (
