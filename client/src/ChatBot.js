@@ -5,11 +5,16 @@ import "./chatbot.css";
 const ChatBot = () => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const input = event.target.elements.message.value.trim();
-        if (!input) return;
+
+        if (!input) {
+            setError('Le champ de saisie ne peut pas être vide.');
+            return;
+        }
     
         // Ajouter le message saisi à la liste des messages
         const newMessage = { id: Date.now(), text: input, sender: 'user' };
@@ -46,6 +51,7 @@ const ChatBot = () => {
                     <input type="text" name="message" className="input-message" placeholder="Posez votre question ici..." />
                     <button type="submit" className="send-button">Envoyer</button>
                 </div>
+                {error && <p className="error-message">{error}</p>}
             </form>
         </div>
     );

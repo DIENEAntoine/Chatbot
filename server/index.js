@@ -22,16 +22,17 @@ app.post('/chat', async (req, res) => {
 
     try {
         const response = await openai.chat.completions.create({
-            model: 'gpt-4',
             messages: [
                 {"role": "system", "content": "Tu es un expert en sportifs professionnels. A chaque fois que tu me réponds je veux que tu me donnes : le nom et prénom, la date de naissance, le poste favoris, 2 fun facts"},
                 {"role": "user", "content": userMessage}
             ],
         model: "gpt-3.5-turbo",
         });
-        
 
-        const chatGptResponse = response.data.choices[0].text.trim();
+        // console.log(response.choices[0]);
+        // return;
+
+        const chatGptResponse = response.choices[0].message.content.trim();
 
         res.json({ message: chatGptResponse });
     } catch (error) {
@@ -42,6 +43,8 @@ app.post('/chat', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+}
